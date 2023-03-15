@@ -1,0 +1,39 @@
+﻿<Window x:Class="SakardinKursach.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SakardinKursach"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Логин:"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="Logtb"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Пароль:"/>
+        <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="Passtb"/>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="Войти" x:Name="loginButton" Height="21" VerticalAlignment="Bottom" Click="loginButton_Click"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="Забыли свой пароль? Нажмите здесь." Margin="0,0,0,22"/>
+
+        <Separator Grid.Row="3" Grid.ColumnSpan="2" Margin="0,20,0,20"/>
+
+        <TextBlock Grid.Row="6" TextWrapping="Wrap" Text="Version: 1.0.0" Grid.ColumnSpan="2" Margin="5,181,49,-181"/>
+    </Grid>
+</Window>

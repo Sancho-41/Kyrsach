@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище user19Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="actions_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="action_time" Type="datetime" Nullable="false" />
+          <Property Name="action_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="operator_id" Type="int" Nullable="false" />
+          <Property Name="call_id" Type="int" />
+          <Property Name="team_id" Type="int" />
+        </EntityType>
+        <EntityType Name="call_assignments">
+          <Key>
+            <PropertyRef Name="call_id" />
+            <PropertyRef Name="team_id" />
+          </Key>
+          <Property Name="call_id" Type="int" Nullable="false" />
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="dispatch_time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="emergency_calls">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="call_time" Type="datetime" Nullable="false" />
+          <Property Name="caller_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="caller_location" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="emergency_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="operator_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="emergency_teams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="team_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="location" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_available" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="operators">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__actions_l__call___47DBAE45">
+          <End Role="emergency_calls" Type="Self.emergency_calls" Multiplicity="0..1" />
+          <End Role="actions_log" Type="Self.actions_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_calls">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_log">
+              <PropertyRef Name="call_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__actions_l__opera__46E78A0C">
+          <End Role="operators" Type="Self.operators" Multiplicity="1" />
+          <End Role="actions_log" Type="Self.actions_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operators">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_log">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__actions_l__team___48CFD27E">
+          <End Role="emergency_teams" Type="Self.emergency_teams" Multiplicity="0..1" />
+          <End Role="actions_log" Type="Self.actions_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_log">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__call_assi__call___4316F928">
+          <End Role="emergency_calls" Type="Self.emergency_calls" Multiplicity="1" />
+          <End Role="call_assignments" Type="Self.call_assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_calls">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="call_assignments">
+              <PropertyRef Name="call_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__call_assi__team___440B1D61">
+          <End Role="emergency_teams" Type="Self.emergency_teams" Multiplicity="1" />
+          <End Role="call_assignments" Type="Self.call_assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="call_assignments">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emergency__opera__3D5E1FD2">
+          <End Role="operators" Type="Self.operators" Multiplicity="1" />
+          <End Role="emergency_calls" Type="Self.emergency_calls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operators">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emergency_calls">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище user19ModelContainer">
+          <EntitySet Name="actions_log" EntityType="Self.actions_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="call_assignments" EntityType="Self.call_assignments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emergency_calls" EntityType="Self.emergency_calls" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emergency_teams" EntityType="Self.emergency_teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="operators" EntityType="Self.operators" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__actions_l__call___47DBAE45" Association="Self.FK__actions_l__call___47DBAE45">
+            <End Role="emergency_calls" EntitySet="emergency_calls" />
+            <End Role="actions_log" EntitySet="actions_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__actions_l__opera__46E78A0C" Association="Self.FK__actions_l__opera__46E78A0C">
+            <End Role="operators" EntitySet="operators" />
+            <End Role="actions_log" EntitySet="actions_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__actions_l__team___48CFD27E" Association="Self.FK__actions_l__team___48CFD27E">
+            <End Role="emergency_teams" EntitySet="emergency_teams" />
+            <End Role="actions_log" EntitySet="actions_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__call_assi__call___4316F928" Association="Self.FK__call_assi__call___4316F928">
+            <End Role="emergency_calls" EntitySet="emergency_calls" />
+            <End Role="call_assignments" EntitySet="call_assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__call_assi__team___440B1D61" Association="Self.FK__call_assi__team___440B1D61">
+            <End Role="emergency_teams" EntitySet="emergency_teams" />
+            <End Role="call_assignments" EntitySet="call_assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emergency__opera__3D5E1FD2" Association="Self.FK__emergency__opera__3D5E1FD2">
+            <End Role="operators" EntitySet="operators" />
+            <End Role="emergency_calls" EntitySet="emergency_calls" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="user19Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="user19Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="actions_log" EntityType="user19Model.actions_log" />
+          <EntitySet Name="call_assignments" EntityType="user19Model.call_assignments" />
+          <EntitySet Name="emergency_calls" EntityType="user19Model.emergency_calls" />
+          <EntitySet Name="emergency_teams" EntityType="user19Model.emergency_teams" />
+          <EntitySet Name="operators" EntityType="user19Model.operators" />
+          <AssociationSet Name="FK__actions_l__call___47DBAE45" Association="user19Model.FK__actions_l__call___47DBAE45">
+            <End Role="emergency_calls" EntitySet="emergency_calls" />
+            <End Role="actions_log" EntitySet="actions_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__actions_l__opera__46E78A0C" Association="user19Model.FK__actions_l__opera__46E78A0C">
+            <End Role="operators" EntitySet="operators" />
+            <End Role="actions_log" EntitySet="actions_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__actions_l__team___48CFD27E" Association="user19Model.FK__actions_l__team___48CFD27E">
+            <End Role="emergency_teams" EntitySet="emergency_teams" />
+            <End Role="actions_log" EntitySet="actions_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__call_assi__call___4316F928" Association="user19Model.FK__call_assi__call___4316F928">
+            <End Role="emergency_calls" EntitySet="emergency_calls" />
+            <End Role="call_assignments" EntitySet="call_assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__call_assi__team___440B1D61" Association="user19Model.FK__call_assi__team___440B1D61">
+            <End Role="emergency_teams" EntitySet="emergency_teams" />
+            <End Role="call_assignments" EntitySet="call_assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emergency__opera__3D5E1FD2" Association="user19Model.FK__emergency__opera__3D5E1FD2">
+            <End Role="operators" EntitySet="operators" />
+            <End Role="emergency_calls" EntitySet="emergency_calls" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="actions_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="action_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="action_type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="operator_id" Type="Int32" Nullable="false" />
+          <Property Name="call_id" Type="Int32" />
+          <Property Name="team_id" Type="Int32" />
+          <NavigationProperty Name="emergency_calls" Relationship="user19Model.FK__actions_l__call___47DBAE45" FromRole="actions_log" ToRole="emergency_calls" />
+          <NavigationProperty Name="operators" Relationship="user19Model.FK__actions_l__opera__46E78A0C" FromRole="actions_log" ToRole="operators" />
+          <NavigationProperty Name="emergency_teams" Relationship="user19Model.FK__actions_l__team___48CFD27E" FromRole="actions_log" ToRole="emergency_teams" />
+        </EntityType>
+        <EntityType Name="call_assignments">
+          <Key>
+            <PropertyRef Name="call_id" />
+            <PropertyRef Name="team_id" />
+          </Key>
+          <Property Name="call_id" Type="Int32" Nullable="false" />
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="dispatch_time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="emergency_calls" Relationship="user19Model.FK__call_assi__call___4316F928" FromRole="call_assignments" ToRole="emergency_calls" />
+          <NavigationProperty Name="emergency_teams" Relationship="user19Model.FK__call_assi__team___440B1D61" FromRole="call_assignments" ToRole="emergency_teams" />
+        </EntityType>
+        <EntityType Name="emergency_calls">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="call_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="caller_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="caller_location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="emergency_type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="operator_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="actions_log" Relationship="user19Model.FK__actions_l__call___47DBAE45" FromRole="emergency_calls" ToRole="actions_log" />
+          <NavigationProperty Name="call_assignments" Relationship="user19Model.FK__call_assi__call___4316F928" FromRole="emergency_calls" ToRole="call_assignments" />
+          <NavigationProperty Name="operators" Relationship="user19Model.FK__emergency__opera__3D5E1FD2" FromRole="emergency_calls" ToRole="operators" />
+        </EntityType>
+        <EntityType Name="emergency_teams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="team_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="is_available" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="actions_log" Relationship="user19Model.FK__actions_l__team___48CFD27E" FromRole="emergency_teams" ToRole="actions_log" />
+          <NavigationProperty Name="call_assignments" Relationship="user19Model.FK__call_assi__team___440B1D61" FromRole="emergency_teams" ToRole="call_assignments" />
+        </EntityType>
+        <EntityType Name="operators">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="actions_log" Relationship="user19Model.FK__actions_l__opera__46E78A0C" FromRole="operators" ToRole="actions_log" />
+          <NavigationProperty Name="emergency_calls" Relationship="user19Model.FK__emergency__opera__3D5E1FD2" FromRole="operators" ToRole="emergency_calls" />
+        </EntityType>
+        <Association Name="FK__actions_l__call___47DBAE45">
+          <End Type="user19Model.emergency_calls" Role="emergency_calls" Multiplicity="0..1" />
+          <End Type="user19Model.actions_log" Role="actions_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_calls">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_log">
+              <PropertyRef Name="call_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__actions_l__opera__46E78A0C">
+          <End Type="user19Model.operators" Role="operators" Multiplicity="1" />
+          <End Type="user19Model.actions_log" Role="actions_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operators">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_log">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__actions_l__team___48CFD27E">
+          <End Type="user19Model.emergency_teams" Role="emergency_teams" Multiplicity="0..1" />
+          <End Type="user19Model.actions_log" Role="actions_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_log">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__call_assi__call___4316F928">
+          <End Type="user19Model.emergency_calls" Role="emergency_calls" Multiplicity="1" />
+          <End Type="user19Model.call_assignments" Role="call_assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_calls">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="call_assignments">
+              <PropertyRef Name="call_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__call_assi__team___440B1D61">
+          <End Type="user19Model.emergency_teams" Role="emergency_teams" Multiplicity="1" />
+          <End Type="user19Model.call_assignments" Role="call_assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emergency_teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="call_assignments">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emergency__opera__3D5E1FD2">
+          <End Type="user19Model.operators" Role="operators" Multiplicity="1" />
+          <End Type="user19Model.emergency_calls" Role="emergency_calls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operators">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emergency_calls">
+              <PropertyRef Name="operator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище user19ModelContainer" CdmEntityContainer="user19Entities1">
+          <EntitySetMapping Name="actions_log">
+            <EntityTypeMapping TypeName="user19Model.actions_log">
+              <MappingFragment StoreEntitySet="actions_log">
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="call_id" ColumnName="call_id" />
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="action_type" ColumnName="action_type" />
+                <ScalarProperty Name="action_time" ColumnName="action_time" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="call_assignments">
+            <EntityTypeMapping TypeName="user19Model.call_assignments">
+              <MappingFragment StoreEntitySet="call_assignments">
+                <ScalarProperty Name="dispatch_time" ColumnName="dispatch_time" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="call_id" ColumnName="call_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emergency_calls">
+            <EntityTypeMapping TypeName="user19Model.emergency_calls">
+              <MappingFragment StoreEntitySet="emergency_calls">
+                <ScalarProperty Name="operator_id" ColumnName="operator_id" />
+                <ScalarProperty Name="emergency_type" ColumnName="emergency_type" />
+                <ScalarProperty Name="caller_location" ColumnName="caller_location" />
+                <ScalarProperty Name="caller_name" ColumnName="caller_name" />
+                <ScalarProperty Name="call_time" ColumnName="call_time" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emergency_teams">
+            <EntityTypeMapping TypeName="user19Model.emergency_teams">
+              <MappingFragment StoreEntitySet="emergency_teams">
+                <ScalarProperty Name="is_available" ColumnName="is_available" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="team_name" ColumnName="team_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="operators">
+            <EntityTypeMapping TypeName="user19Model.operators">
+              <MappingFragment StoreEntitySet="operators">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

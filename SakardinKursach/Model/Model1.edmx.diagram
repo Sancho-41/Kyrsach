@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3f37918fd9c948abb556a0a50f531c5c" Name="Diagram1">
+        <EntityTypeShape EntityType="user19Model.actions_log" Width="1.5" PointX="5.25" PointY="4.875" />
+        <EntityTypeShape EntityType="user19Model.call_assignments" Width="1.5" PointX="5.25" PointY="8.75" />
+        <EntityTypeShape EntityType="user19Model.emergency_calls" Width="1.5" PointX="3" PointY="6.375" />
+        <EntityTypeShape EntityType="user19Model.emergency_teams" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="user19Model.operators" Width="1.5" PointX="0.75" PointY="3.25" />
+        <AssociationConnector Association="user19Model.FK__actions_l__call___47DBAE45" />
+        <AssociationConnector Association="user19Model.FK__actions_l__opera__46E78A0C" />
+        <AssociationConnector Association="user19Model.FK__actions_l__team___48CFD27E" />
+        <AssociationConnector Association="user19Model.FK__call_assi__call___4316F928" />
+        <AssociationConnector Association="user19Model.FK__call_assi__team___440B1D61" />
+        <AssociationConnector Association="user19Model.FK__emergency__opera__3D5E1FD2" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

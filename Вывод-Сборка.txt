@@ -1,0 +1,4 @@
+﻿Повторная сборка начата…
+1>------ Перестроение всех файлов начато: проект: SakardinKursach, Конфигурация: Debug Any CPU ------
+1>  SakardinKursach -> C:\Users\user19\source\repos\SakardinKursach\SakardinKursach\bin\Debug\SakardinKursach.exe
+========== Перестроение всех проектов: успешно: 1, с ошибками: 0, пропущено: 0 ==========
